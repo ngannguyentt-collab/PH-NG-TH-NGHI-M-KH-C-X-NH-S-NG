@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phòng Thí Nghiệm Ảo Khúc Xạ Ánh Sáng - KHTN 9 (Hình 5.2)</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .header-title h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-title p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .main-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 20px;
+      flex: 1;
+    }
+    @media (max-width: 960px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+    select, input[type="range"], button {
+      touch-action: manipulation;
+    }
+    select {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 0.8rem;
+      font-weight: 500;
+      outline: none;
+      color: #1e293b;
+    }
+    select:focus {
+      border-color: var(--primary);
+    }
+    .slider-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      accent-color: var(--danger);
+      cursor: pointer;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .btn-sm {
+      padding: 4px 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #334155;
+    }
+    .btn-sm:hover {
+      background: #e2e8f0;
+    }
+    .btn-sm.active {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger);
+    }
+    .disc-container {
+      position: relative;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    svg {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      user-select: none;
+    }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      border: 1px solid #f1f5f9;
+    }
+    .toggle-row label {
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    .formula-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+    .alert-tir {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+    .laser-pointer {
+      cursor: grab;
+    }
+    .laser-pointer:active {
+      cursor: grabbing;
+    }
+    .color-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px #cbd5e1;
+    }
+    .color-dot.active {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 2px #0f172a;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-title">
+      <h1>🔬 Phòng Thí Nghiệm Ảo: Khúc Xạ Ánh Sáng <span class="badge">KHTN 9 - HÌNH 5.2</span></h1>
+      <p>Mô phỏng đĩa tròn chia độ 360°, định luật khúc xạ ánh sáng và phản xạ toàn phần</p>
+    </div>
+    <div style="font-size: 0.75rem; color: #64748b;">
+      Bản tự chứa offline • Tương thích Office & Máy chiếu
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- CỘT BÊN TRÁI: ĐIỀU KHIỂN & CÔNG THỨC -->
+    <div class="controls-column">
+      <!-- 1. GÓC TỚI TIA SÁNG (i) -->
+      <div class="card">
+        <div class="card-title">
+          <span>Góc Tới Tia Sáng (i)</span>
+          <span id="label-i-val" style="font-size: 1.1rem; color: var(--danger); font-family: monospace; font-weight: 900;">30°</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" id="slider-angle" min="0" max="89" step="1" value="30">
+          <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #94a3b8; font-family: monospace;">
+            <span>0° (Vuông góc)</span>
+            <span>45°</span>
+            <span>89°</span>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-sm" onclick="adjustAngle(-5)">-5°</button>
+          <button class="btn-sm" onclick="adjustAngle(-1)">-1°</button>
+          <button class="btn-sm" onclick="adjustAngle(1)">+1°</button>
+          <button class="btn-sm" onclick="adjustAngle(5)">+5°</button>
+          <button class="btn-sm" onclick="setAngle(0)">0°</button>
+          <button class="btn-sm active" id="btn-p-30" onclick="setAngle(30)">30°</button>
+          <button class="btn-sm" id="btn-p-45" onclick="setAngle(45)">45°</button>
+          <button class="btn-sm" id="btn-p-60" onclick="setAngle(60)">60°</button>
+        </div>
+      </div>
+
+      <!-- 2. MÔI TRƯỜNG TRUYỀN ÁNH SÁNG -->
+      <div class="card">
+        <div class="card-title">
+          <span>Môi Trường Ánh Sáng</span>
+          <button class="btn-sm" onclick="swapMediums()" title="Đổi chỗ Môi trường 1 và 2">⇄ Đổi vị trí</button>
+        </div>
+        <div class="form-group">
+          <label>Môi trường 1 (chứa tia tới SI):</label>
+          <select id="select-m1" onchange="onM1Select(this.value)">
+            <option value="1.000" selected>Không khí (n = 1,000)</option>
+            <option value="1.333">Nước (n = 1,333)</option>
+            <option value="1.360">Rượu Ethanol (n = 1,360)</option>
+            <option value="1.470">Dầu ăn (n = 1,470)</option>
+            <option value="1.520">Thủy tinh Crown (n = 1,520)</option>
+            <option value="1.620">Thủy tinh Flint (n = 1,620)</option>
+            <option value="2.417">Kim cương (n = 2,417)</option>
+          </select>
+          <div style="margin-top: 4px; display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748b;">
+            <span>Chiết suất n₁:</span>
+            <span id="txt-n1" style="font-weight: 700; color: #4338ca;">1.000</span>
+          </div>
+          <input type="range" id="slider-n1" min="1.000" max="2.500" step="0.005" value="1.000" oninput="onN1Slider(this.value)">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label>Môi trường 2 (chứa tia khúc xạ IK):</label>
+          <select id="select-m2" onchange="onM2Select(this.value)">
+            <option value="1.000">Không khí (n = 1,000)</option>
+            <option value="1.333" selected>Nước (n = 1,333)</option>
+            <option value="1.360">Rượu Ethanol (n = 1,360)</option>
+            <option value="1.470">Dầu ăn (n = 1,470)</option>
+            <option value="1.520">Thủy tinh Crown (n = 1,520)</option>
+            <option value="1.620">Thủy tinh Flint (n = 1,620)</option>
+            <option value="2.417">Kim cương (n = 2,417)</option>
+          </select>
+          <div style="margin-top: 4px; display: flex; justify-content: space-between; font-size: 0.72rem; color: #64748b;">
+            <span>Chiết suất n₂:</span>
+            <span id="txt-n2" style="font-weight: 700; color: #0284c7;">1.333</span>
+          </div>
+          <input type="range" id="slider-n2" min="1.000" max="2.500" step="0.005" value="1.333" oninput="onN2Slider(this.value)">
+        </div>
+      </div>
+
+      <!-- 3. HƯỚNG CHIẾU TIA SÁNG -->
+      <div class="card">
+        <div class="card-title">Hướng Chiếu Tia Sáng</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div>
+            <label>Phía phát tia:</label>
+            <div style="display: flex; gap: 4px;">
+              <button class="btn-sm active" id="btn-side-left" onclick="setSide('left')">Trái</button>
+              <button class="btn-sm" id="btn-side-right" onclick="setSide('right')">Phải</button>
+            </div>
+          </div>
+          <div>
+            <label>Chiều truyền:</label>
+            <div style="display: flex; gap: 4px;">
+              <button class="btn-sm active" id="btn-dir-top" onclick="setDir('top')">Trên xuống</button>
+              <button class="btn-sm" id="btn-dir-bottom" onclick="setDir('bottom')">Dưới lên</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. TÙY CHỌN TIA PHẢN XẠ & HIỂN THỊ -->
+      <div class="card">
+        <div class="card-title">Tùy Chọn Quan Sát</div>
+        <div class="toggle-row" style="background: #fef3c7;">
+          <label for="chk-reflect" style="color: #92400e; font-weight: 700;">Xem tia phản xạ IS':</label>
+          <input type="checkbox" id="chk-reflect" checked onchange="updateDisc()">
+        </div>
+        <div class="toggle-row">
+          <label for="chk-protractor">Thước đo tròn 360°:</label>
+          <input type="checkbox" id="chk-protractor" checked onchange="updateDisc()">
+        </div>
+        <div class="toggle-row">
+          <label for="chk-normal">Pháp tuyến NN' và các nhãn:</label>
+          <input type="checkbox" id="chk-normal" checked onchange="updateDisc()">
+        </div>
+        <div class="toggle-row">
+          <label for="chk-angles">Số đo góc i & r:</label>
+          <input type="checkbox" id="chk-angles" checked onchange="updateDisc()">
+        </div>
+        <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Màu laser:</span>
+          <div style="display: flex; gap: 8px;">
+            <span class="color-dot active" style="background: #ef4444;" onclick="setLaserColor('#ef4444', this)"></span>
+            <span class="color-dot" style="background: #22c55e;" onclick="setLaserColor('#22c55e', this)"></span>
+            <span class="color-dot" style="background: #3b82f6;" onclick="setLaserColor('#3b82f6', this)"></span>
+            <span class="color-dot" style="background: #a855f7;" onclick="setLaserColor('#a855f7', this)"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. CÔNG THỨC & TÍNH TOÁN -->
+      <div class="card">
+        <div class="card-title">Định Luật Khúc Xạ Ánh Sáng</div>
+        <div class="formula-box" id="calc-box">
+          <!-- Tính toán động điền tại đây -->
+        </div>
+        <div id="tir-container"></div>
+      </div>
+    </div>
+
+    <!-- CỘT BÊN PHẢI: ĐĨA CHIA ĐỘ 360 ĐỘ (HÌNH 5.2 KHTN 9) -->
+    <div class="disc-column">
+      <div class="disc-container">
+        <svg id="optical-svg" viewBox="0 0 640 640">
+          <defs>
+            <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            <clipPath id="disc-clip">
+              <circle cx="320" cy="320" r="250" />
+            </clipPath>
+          </defs>
+
+          <!-- Nền chia hai môi trường -->
+          <g clipPath="url(#disc-clip)">
+            <rect id="bg-top" x="70" y="70" width="500" height="250" fill="#f0f9ff" opacity="0.8" />
+            <rect id="bg-bottom" x="70" y="320" width="500" height="250" fill="#e0f2fe" opacity="0.8" />
+          </g>
+
+          <!-- Vòng ngoài đĩa -->
+          <circle cx="320" cy="320" r="250" fill="none" stroke="#334155" stroke-width="2.5" />
+          <circle cx="320" cy="320" r="234" fill="none" stroke="#cbd5e1" stroke-width="1" />
+
+          <!-- Vạch chia độ 360 độ -->
+          <g id="protractor-ticks"></g>
+
+          <!-- Mặt phân cách hai môi trường -->
+          <line x1="50" y1="320" x2="590" y2="320" stroke="#0f172a" stroke-width="2.2" />
+          <text x="44" y="325" text-anchor="end" font-size="12" font-weight="bold" fill="#334155">P (90°)</text>
+          <text x="596" y="325" text-anchor="start" font-size="12" font-weight="bold" fill="#334155">Q (90°)</text>
+
+          <!-- Pháp tuyến NN' -->
+          <g id="normal-group">
+            <line x1="320" y1="45" x2="320" y2="595" stroke="#475569" stroke-width="1.6" stroke-dasharray="6 4" />
+            <circle cx="320" cy="55" r="11" fill="#f8fafc" stroke="#475569" stroke-width="1.5" />
+            <text x="320" y="60" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f172a">N</text>
+            <text x="320" y="38" text-anchor="middle" font-size="10" font-weight="600" fill="#64748b">(0°)</text>
+
+            <circle cx="320" cy="585" r="11" fill="#f8fafc" stroke="#475569" stroke-width="1.5" />
+            <text x="320" y="590" text-anchor="middle" font-size="12" font-weight="bold" fill="#0f172a">N'</text>
+            <text x="320" y="608" text-anchor="middle" font-size="10" font-weight="600" fill="#64748b">(0°)</text>
+          </g>
+
+          <!-- Điểm tới I -->
+          <circle cx="320" cy="320" r="5" fill="#0f172a" />
+          <text x="330" y="312" font-size="15" font-weight="900" fill="#0f172a">I</text>
+
+          <!-- Cung hiển thị góc -->
+          <g id="angles-group"></g>
+
+          <!-- Tia tới, tia khúc xạ, tia phản xạ -->
+          <g id="rays-group"></g>
+
+          <!-- Nguồn sáng laser S (Có thể kéo) -->
+          <g id="laser-source" class="laser-pointer">
+            <circle id="laser-touch" cx="320" cy="70" r="28" fill="transparent" />
+            <g id="laser-body"></g>
+          </g>
+        </svg>
+
+        <div style="margin-top: 12px; font-size: 0.78rem; color: #64748b; text-align: center;">
+          💡 <i>Bạn có thể kéo trực tiếp nguồn sáng laser <b>S</b> trên vành đĩa hoặc kéo thanh trượt để thay đổi góc tới i.</i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Trạng thái thí nghiệm
+    let incidentAngle = 30;
+    let n1 = 1.000;
+    let n2 = 1.333;
+    let lightSide = 'left';
+    let lightDir = 'top'; // 'top' = từ trên xuống, 'bottom' = từ dưới lên
+    let laserColor = '#ef4444';
+    let isDragging = false;
+
+    const cx = 320, cy = 320, radius = 250;
+
+    // Khởi tạo các vạch chia 360 độ theo chuẩn KHTN 9 (0° tại N, 90° tại P/Q)
+    function initProtractor() {
+      const g = document.getElementById('protractor-ticks');
+      g.innerHTML = '';
+      for (let angle = 0; angle < 360; angle++) {
+        const rad = (angle * Math.PI) / 180;
+        const isMajor = angle % 10 === 0;
+        const isSemiMajor = angle % 5 === 0 && !isMajor;
+
+        const tickLen = isMajor ? 14 : isSemiMajor ? 9 : 5;
+        const x1 = cx + radius * Math.cos(rad);
+        const y1 = cy + radius * Math.sin(rad);
+        const x2 = cx + (radius - tickLen) * Math.cos(rad);
+        const y2 = cy + (radius - tickLen) * Math.sin(rad);
+
+        let deg = 0;
+        if (angle >= 0 && angle <= 90) deg = 90 - angle;
+        else if (angle > 90 && angle <= 180) deg = angle - 90;
+        else if (angle > 180 && angle <= 270) deg = 270 - angle;
+        else deg = angle - 270;
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('stroke', isMajor ? '#1e293b' : isSemiMajor ? '#475569' : '#94a3b8');
+        line.setAttribute('stroke-width', isMajor ? '1.4' : isSemiMajor ? '1' : '0.6');
+        g.appendChild(line);
+
+        if (isMajor) {
+          const tx = cx + (radius - 26) * Math.cos(rad);
+          const ty = cy + (radius - 26) * Math.sin(rad);
+          const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          text.setAttribute('x', tx);
+          text.setAttribute('y', ty);
+          text.setAttribute('text-anchor', 'middle');
+          text.setAttribute('dominant-baseline', 'central');
+          text.setAttribute('font-size', '10');
+          text.setAttribute('font-family', 'monospace');
+          text.setAttribute('fill', '#64748b');
+          text.textContent = deg;
+          g.appendChild(text);
+        }
+      }
+    }
+
+    function calculateOptics() {
+      const iRad = (incidentAngle * Math.PI) / 180;
+      const sinI = Math.sin(iRad);
+      const sinR = (n1 / n2) * sinI;
+
+      let isTIR = false;
+      let rDeg = null;
+      let criticalDeg = null;
+
+      if (n1 > n2) {
+        criticalDeg = (Math.asin(n2 / n1) * 180) / Math.PI;
+      }
+
+      if (sinR > 1.0000001) {
+        isTIR = true;
+      } else {
+        const clampedSinR = Math.min(1, Math.max(-1, sinR));
+        rDeg = (Math.asin(clampedSinR) * 180) / Math.PI;
+      }
+
+      return { sinI, sinR, isTIR, rDeg, criticalDeg };
+    }
+
+    function updateDisc() {
+      const optics = calculateOptics();
+      const showReflect = document.getElementById('chk-reflect').checked;
+      const showProtractor = document.getElementById('chk-protractor').checked;
+      const showNormal = document.getElementById('chk-normal').checked;
+      const showAngles = document.getElementById('chk-angles').checked;
+
+      document.getElementById('protractor-ticks').style.display = showProtractor ? 'block' : 'none';
+      document.getElementById('normal-group').style.display = showNormal ? 'block' : 'none';
+
+      const isTop = lightDir === 'top';
+      const isLeft = lightSide === 'left';
+      const iRad = (incidentAngle * Math.PI) / 180;
+
+      const sxSign = isLeft ? -1 : 1;
+      const sySign = isTop ? -1 : 1;
+      const sx = cx + sxSign * radius * Math.sin(iRad);
+      const sy = cy + sySign * radius * Math.cos(iRad);
+
+      const kxSign = isLeft ? 1 : -1;
+      const kySign = isTop ? 1 : -1;
+
+      // Cập nhật nguồn laser
+      const rot = Math.atan2(cy - sy, cx - sx) * (180 / Math.PI);
+      const laserBody = document.getElementById('laser-body');
+      laserBody.innerHTML = `
+        <g transform="translate(${sx}, ${sy}) rotate(${rot})">
+          <rect x="-30" y="-8" width="28" height="16" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+          <path d="M -2 -6 L 3 -3 L 3 3 L -2 6 Z" fill="#94a3b8" />
+          <circle cx="2" cy="0" r="2.5" fill="${laserColor}" filter="url(#glow)" />
+        </g>
+        <circle cx="${sx}" cy="${sy}" r="5" fill="${laserColor}" stroke="#fff" stroke-width="1.5" />
+        <text x="${sx + (isLeft ? -16 : 16)}" y="${sy + (isTop ? -14 : 18)}" text-anchor="middle" font-size="15" font-weight="900" fill="#b91c1c">S</text>
+      `;
+
+      // Cập nhật các tia sáng
+      const raysG = document.getElementById('rays-group');
+      let raysHtml = `
+        <!-- Tia tới SI -->
+        <line x1="${sx}" y1="${sy}" x2="${cx}" y2="${cy}" stroke="${laserColor}" stroke-width="8" stroke-opacity="0.25" stroke-linecap="round" />
+        <line x1="${sx}" y1="${sy}" x2="${cx}" y2="${cy}" stroke="${laserColor}" stroke-width="3" stroke-linecap="round" />
+      `;
+
+      // Mũi tên tia tới
+      const midIncX = (sx + cx) / 2;
+      const midIncY = (sy + cy) / 2;
+      const angleInc = Math.atan2(cy - sy, cx - sx) * (180 / Math.PI);
+      raysHtml += `
+        <g transform="translate(${midIncX}, ${midIncY}) rotate(${angleInc})">
+          <polygon points="-6,-4 4,0 -6,4" fill="#fff" stroke="${laserColor}" stroke-width="1.5" />
+        </g>
+      `;
+
+      // Tia khúc xạ IK
+      if (!optics.isTIR && optics.rDeg !== null) {
+        const rRad = (optics.rDeg * Math.PI) / 180;
+        const kx = cx + kxSign * radius * Math.sin(rRad);
+        const ky = cy + kySign * radius * Math.cos(rRad);
+
+        raysHtml += `
+          <!-- Tia khúc xạ IK -->
+          <line x1="${cx}" y1="${cy}" x2="${kx}" y2="${ky}" stroke="${laserColor}" stroke-width="7" stroke-opacity="0.22" stroke-linecap="round" />
+          <line x1="${cx}" y1="${cy}" x2="${kx}" y2="${ky}" stroke="${laserColor}" stroke-width="2.8" stroke-linecap="round" />
+          <circle cx="${kx}" cy="${ky}" r="4" fill="#0284c7" />
+          <text x="${kx + (kx > cx ? 12 : -12)}" y="${ky + (ky > cy ? 14 : -10)}" text-anchor="middle" font-size="14" font-weight="900" fill="#0284c7">K</text>
+        `;
+
+        // Mũi tên tia khúc xạ
+        const midKx = (cx + kx) / 2;
+        const midKy = (cy + ky) / 2;
+        const angleRef = Math.atan2(ky - cy, kx - cx) * (180 / Math.PI);
+        raysHtml += `
+          <g transform="translate(${midKx}, ${midKy}) rotate(${angleRef})">
+            <polygon points="-6,-4 4,0 -6,4" fill="#fff" stroke="${laserColor}" stroke-width="1.5" />
+          </g>
+        `;
+      }
+
+      // Tia phản xạ IS'
+      if (showReflect || optics.isTIR) {
+        const sPrimeX = cx + kxSign * radius * Math.sin(iRad);
+        const sPrimeY = cy + sySign * radius * Math.cos(iRad);
+        const strokeColor = optics.isTIR ? laserColor : '#f59e0b';
+        const strokeW = optics.isTIR ? '3.5' : '2';
+        const dash = optics.isTIR ? 'none' : '4 3';
+
+        raysHtml += `
+          <!-- Tia phản xạ IS' -->
+          <line x1="${cx}" y1="${cy}" x2="${sPrimeX}" y2="${sPrimeY}" stroke="${strokeColor}" stroke-width="${strokeW}" stroke-dasharray="${dash}" stroke-linecap="round" />
+          <circle cx="${sPrimeX}" cy="${sPrimeY}" r="3.5" fill="#d97706" />
+          <text x="${sPrimeX + (sPrimeX > cx ? 12 : -12)}" y="${sPrimeY + (isTop ? -10 : 14)}" text-anchor="middle" font-size="11" font-weight="bold" fill="#b45309">S'</text>
+        `;
+      }
+
+      raysG.innerHTML = raysHtml;
+
+      // Cập nhật góc
+      const anglesG = document.getElementById('angles-group');
+      let anglesHtml = '';
+      if (showAngles && incidentAngle > 0) {
+        // Cung i
+        const arcR = 65;
+        const startX = cx;
+        const startY = isTop ? cy - arcR : cy + arcR;
+        const endX = cx + arcR * Math.sin(isLeft ? -iRad : iRad);
+        const endY = isTop ? cy - arcR * Math.cos(iRad) : cy + arcR * Math.cos(iRad);
+        const sweepInc = isTop ? (isLeft ? 0 : 1) : (isLeft ? 1 : 0);
+
+        anglesHtml += `
+          <path d="M ${startX} ${startY} A ${arcR} ${arcR} 0 0 ${sweepInc} ${endX} ${endY}" fill="none" stroke="${laserColor}" stroke-width="2" />
+          <text x="${cx + (arcR + 18) * Math.sin(isLeft ? -iRad/2 : iRad/2)}" y="${isTop ? cy - (arcR + 18) * Math.cos(iRad/2) : cy + (arcR + 18) * Math.cos(iRad/2)}" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="bold" fill="#b91c1c">i=${incidentAngle}°</text>
+        `;
+
+        // Cung r
+        if (!optics.isTIR && optics.rDeg !== null) {
+          const rRad = (optics.rDeg * Math.PI) / 180;
+          const arcRefR = 75;
+          const rStartX = cx;
+          const rStartY = isTop ? cy + arcRefR : cy - arcRefR;
+          const rEndX = cx + arcRefR * Math.sin(isLeft ? rRad : -rRad);
+          const rEndY = isTop ? cy + arcRefR * Math.cos(rRad) : cy - arcRefR * Math.cos(rRad);
+          const sweepRef = isTop ? (isLeft ? 1 : 0) : (isLeft ? 0 : 1);
+
+          anglesHtml += `
+            <path d="M ${rStartX} ${rStartY} A ${arcRefR} ${arcRefR} 0 0 ${sweepRef} ${rEndX} ${rEndY}" fill="none" stroke="#0284c7" stroke-width="2" />
+            <text x="${cx + (arcRefR + 18) * Math.sin(isLeft ? rRad/2 : -rRad/2)}" y="${isTop ? cy + (arcRefR + 18) * Math.cos(rRad/2) : cy - (arcRefR + 18) * Math.cos(rRad/2)}" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="bold" fill="#0369a1">r=${optics.rDeg.toFixed(1)}°</text>
+          `;
+        }
+      }
+      anglesG.innerHTML = anglesHtml;
+
+      // Cập nhật khung tính toán
+      const calcBox = document.getElementById('calc-box');
+      calcBox.innerHTML = `
+        <div>• n₁ = <b>${n1.toFixed(3)}</b>, n₂ = <b>${n2.toFixed(3)}</b></div>
+        <div>• sin(i) = sin(${incidentAngle}°) = <b>${optics.sinI.toFixed(4)}</b></div>
+        <div>• sin(r) = (n₁ / n₂) · sin(i) = <b>${optics.sinR !== null && !optics.isTIR ? optics.sinR.toFixed(4) : '> 1.0 (Không tồn tại tia khúc xạ)'}</b></div>
+        <div>• Kết luận: ${!optics.isTIR ? 'Góc khúc xạ r = <b>' + optics.rDeg.toFixed(1) + '°</b>' : '<b style="color: #d97706;">PHẢN XẠ TOÀN PHẦN</b>'}</div>
+      `;
+
+      const tirCont = document.getElementById('tir-container');
+      if (optics.isTIR) {
+        tirCont.innerHTML = `
+          <div class="alert-tir">
+            ⚠️ <b>HIỆN TƯỢNG PHẢN XẠ TOÀN PHẦN:</b> Góc tới i = ${incidentAngle}° ≥ i_gh = ${optics.criticalDeg.toFixed(1)}°. Toàn bộ tia sáng bị phản xạ trở lại với góc i' = ${incidentAngle}°.
+          </div>
+        `;
+      } else if (n1 > n2 && optics.criticalDeg !== null) {
+        tirCont.innerHTML = `
+          <div style="font-size: 0.72rem; color: #64748b; margin-top: 6px;">
+            Góc giới hạn phản xạ toàn phần: <b>i_gh = ${optics.criticalDeg.toFixed(2)}°</b>
+          </div>
+        `;
+      } else {
+        tirCont.innerHTML = '';
+      }
+    }
+
+    function setAngle(deg) {
+      incidentAngle = Math.max(0, Math.min(89, deg));
+      document.getElementById('slider-angle').value = incidentAngle;
+      document.getElementById('label-i-val').textContent = incidentAngle + '°';
+      updateDisc();
+    }
+
+    function adjustAngle(delta) {
+      setAngle(incidentAngle + delta);
+    }
+
+    function setSide(side) {
+      lightSide = side;
+      document.getElementById('btn-side-left').classList.toggle('active', side === 'left');
+      document.getElementById('btn-side-right').classList.toggle('active', side === 'right');
+      updateDisc();
+    }
+
+    function setDir(dir) {
+      lightDir = dir;
+      document.getElementById('btn-dir-top').classList.toggle('active', dir === 'top');
+      document.getElementById('btn-dir-bottom').classList.toggle('active', dir === 'bottom');
+      updateDisc();
+    }
+
+    function setLaserColor(color, el) {
+      laserColor = color;
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      if (el) el.classList.add('active');
+      updateDisc();
+    }
+
+    function onM1Select(val) {
+      n1 = parseFloat(val);
+      document.getElementById('txt-n1').textContent = n1.toFixed(3);
+      document.getElementById('slider-n1').value = n1;
+      updateDisc();
+    }
+
+    function onN1Slider(val) {
+      n1 = parseFloat(val);
+      document.getElementById('txt-n1').textContent = n1.toFixed(3);
+      updateDisc();
+    }
+
+    function onM2Select(val) {
+      n2 = parseFloat(val);
+      document.getElementById('txt-n2').textContent = n2.toFixed(3);
+      document.getElementById('slider-n2').value = n2;
+      updateDisc();
+    }
+
+    function onN2Slider(val) {
+      n2 = parseFloat(val);
+      document.getElementById('txt-n2').textContent = n2.toFixed(3);
+      updateDisc();
+    }
+
+    function swapMediums() {
+      const tempN = n1;
+      n1 = n2;
+      n2 = tempN;
+      document.getElementById('txt-n1').textContent = n1.toFixed(3);
+      document.getElementById('slider-n1').value = n1;
+      document.getElementById('txt-n2').textContent = n2.toFixed(3);
+      document.getElementById('slider-n2').value = n2;
+      updateDisc();
+    }
+
+    // Xử lý kéo thả đèn laser bằng chuột hoặc chạm cảm ứng
+    const svgEl = document.getElementById('optical-svg');
+    svgEl.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+    });
+    window.addEventListener('pointerup', () => {
+      isDragging = false;
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const rect = svgEl.getBoundingClientRect();
+      const clientX = e.clientX - rect.left;
+      const clientY = e.clientY - rect.top;
+      const svgX = clientX * (640 / rect.width);
+      const svgY = clientY * (640 / rect.height);
+      const dx = svgX - cx;
+      const dy = svgY - cy;
+
+      const currentDy = lightDir === 'top' ? -Math.abs(dy) : Math.abs(dy);
+      const rad = Math.atan2(Math.abs(dx), Math.abs(currentDy));
+      let deg = Math.round((rad * 180) / Math.PI);
+      deg = Math.max(0, Math.min(89, deg));
+      setAngle(deg);
+    });
+
+    document.getElementById('slider-angle').addEventListener('input', (e) => {
+      setAngle(parseInt(e.target.value));
+    });
+
+    // Khởi động ban đầu
+    initProtractor();
+    updateDisc();
+  </script>
+</body>
+</html>
